@@ -1,4 +1,4 @@
-﻿namespace Csharp_learning
+﻿namespace _001_开始
 {
     partial class Form1
     {
@@ -33,11 +33,11 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(319, 166);
+            this.button1.Location = new System.Drawing.Point(434, 179);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
+            this.button1.Text = "button2";
             this.button1.UseVisualStyleBackColor = true;
             // 
             // Form1

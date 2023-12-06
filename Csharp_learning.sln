@@ -5,6 +5,8 @@ VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Csharp_learning", "Csharp_learning\Csharp_learning.csproj", "{E115CD66-0738-4141-A68A-7158CDAB3E7A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "001_开始", "001_开始\001_开始.csproj", "{0219DAB9-55C0-4996-8A90-1E558C899C41}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{E115CD66-0738-4141-A68A-7158CDAB3E7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E115CD66-0738-4141-A68A-7158CDAB3E7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E115CD66-0738-4141-A68A-7158CDAB3E7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0219DAB9-55C0-4996-8A90-1E558C899C41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0219DAB9-55C0-4996-8A90-1E558C899C41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0219DAB9-55C0-4996-8A90-1E558C899C41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0219DAB9-55C0-4996-8A90-1E558C899C41}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

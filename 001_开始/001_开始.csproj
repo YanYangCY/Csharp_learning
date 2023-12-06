@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E115CD66-0738-4141-A68A-7158CDAB3E7A}</ProjectGuid>
+    <ProjectGuid>{0219DAB9-55C0-4996-8A90-1E558C899C41}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Csharp_learning</RootNamespace>
-    <AssemblyName>Csharp_learning</AssemblyName>
+    <RootNamespace>_001_开始</RootNamespace>
+    <AssemblyName>001_开始</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
