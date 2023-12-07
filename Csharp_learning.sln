@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Csharp_learning", "Csharp_l
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test", "test\test.csproj", "{1A81057B-17AD-4894-9A73-186B94EECF8D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chapter 3", "Chapter 3\Chapter 3.csproj", "{BD495DA5-D687-4674-B78D-090087B8D279}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{1A81057B-17AD-4894-9A73-186B94EECF8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A81057B-17AD-4894-9A73-186B94EECF8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A81057B-17AD-4894-9A73-186B94EECF8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD495DA5-D687-4674-B78D-090087B8D279}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD495DA5-D687-4674-B78D-090087B8D279}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD495DA5-D687-4674-B78D-090087B8D279}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD495DA5-D687-4674-B78D-090087B8D279}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
