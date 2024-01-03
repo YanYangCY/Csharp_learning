@@ -11,7 +11,7 @@ namespace Chapter4
     /// 5.※4-8中的内存存放位置还有疑问，后面再看
     /// 6.局部变量需要初始化后才能使用，类字段、结构字段、数组元素是可以自动初始化的
     /// </summary>
-    class chapter4
+    class Chapter4
     {
         static void Main()
         {
