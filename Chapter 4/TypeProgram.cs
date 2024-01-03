@@ -9,12 +9,13 @@ namespace Chapter4
     /// 3.自定义类型(6)：类（class）、结构（struct）、数组（array）、枚举（enum）、委托（delegate）、接口（interface）
     /// 4.预定义只需要实例化、自定义的需要声明和实例化
     /// 5.※4-8中的内存存放位置还有疑问，后面再看
+    /// 6.局部变量需要初始化后才能使用，类字段、结构字段、数组元素是可以自动初始化的
     /// </summary>
     class chapter4
     {
         static void Main()
         {
-
+            Console.WriteLine("{0}", GlobalVariables.GlobalVariable);//调用静态类的静态成员
         }
     }
     /// <summary>
