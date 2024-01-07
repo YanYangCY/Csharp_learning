@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chapter 3", "Chapter 3\Chap
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chapter 4", "Chapter 4\Chapter 4.csproj", "{88B5AE0A-30A2-484B-AAC0-905075A88954}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YY", "YY\YY.csproj", "{01CAF9EC-227C-42C2-B25C-95D54A6B8EFD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YY", "YY\YY.csproj", "{01CAF9EC-227C-42C2-B25C-95D54A6B8EFD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chapter 5", "Chapter5\Chapter 5.csproj", "{1016AF36-30CC-4498-8D45-72D4E0AB6EDF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{01CAF9EC-227C-42C2-B25C-95D54A6B8EFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01CAF9EC-227C-42C2-B25C-95D54A6B8EFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01CAF9EC-227C-42C2-B25C-95D54A6B8EFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1016AF36-30CC-4498-8D45-72D4E0AB6EDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1016AF36-30CC-4498-8D45-72D4E0AB6EDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1016AF36-30CC-4498-8D45-72D4E0AB6EDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1016AF36-30CC-4498-8D45-72D4E0AB6EDF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
