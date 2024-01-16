@@ -8,9 +8,22 @@ namespace ClassConcept
     /// </summary>
     class ClasConcept
     {
-        static void Main()
+        /*static void Main()
         {
             Console.WriteLine("chapter 5");
-        }
+
+            //Dealer theDealer; 声明引用变量
+            //theDealer = new Dealer(); 为类对象分配内存并赋值给变量
+            //合并上面两个步骤，用于对象创建表达式来初始化变量
+            Dealer theDealer = new Dealer();
+
+            //访问修饰符
+            //public 公有的    private 私有的     protected 受保护的   internal 内部的   protected internal 受保护内部的
+            //私有访问是默认的访问级别; 私有成员只能从声明它的类的内部访问
+        }*/
+    }
+    class Dealer
+    {
+
     }
 }
