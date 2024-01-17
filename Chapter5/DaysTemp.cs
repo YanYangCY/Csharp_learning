@@ -8,10 +8,10 @@ namespace Chapter_5
 {
     class DaysTemp  
     {
-        public int High, Low;
-        public int Average()
+        public int High, Low;   //成员变量
+        public int Average()    //成员方法
         {
-            return (High + Low) / 2;
+            return (High + Low) / 2;    //返回平均值
         }
     }
     class Program
