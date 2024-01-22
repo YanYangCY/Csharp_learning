@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 
 namespace Method
 {
@@ -8,15 +9,24 @@ namespace Method
     /// var关键字只能用于局部变量，不能用于字段(类、结构体的变量)；只能在变量声明中包含初始化时使用
     /// const关键字用于声明常量类型
     /// 在void声明的方法中，可以使用return;来退出方法
+    /// 使用ref关键字传递方法参数，方法接收到的都是直接内存引用；方法的声明和调用上都需要使用ref
     /// </summary>
     class MethodTest
     {
+        public int Val = 10;
         public void TestReturn()
         {
             int x = 1;
             int y = 2;
             if (x == 1) { Console.WriteLine("X: {0}", x); return; } //return语句后面的语句不会执行
             if (y == 2) { Console.WriteLine("Y: {0}", y); }
+        }
+
+        public void MyMethod(ref MethodTest f1, ref int f2) //方法使用引用参数
+        {
+            f1.Val = f1.Val + 10;
+            f2 = f2 + 5;
+            Console.WriteLine($"f1.Val:{f1.Val}, f2:{f2}");
         }
 
         static void Main(string[] args)
@@ -33,6 +43,10 @@ namespace Method
 
             newMetod.TestReturn();  //调用对象的方法
             Console.WriteLine("******************************");
+
+            newMetod.MyMethod(ref newMetod, ref a); //调用对象的方法，使用ref关键字，将方法的参数传递为引用类型
+            Console.WriteLine($"newMetod.Val:{newMetod.Val}, a:{a}");
+        
 
 
         }
