@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 namespace Method
 {
     /// <summary>
+    /// ***方法的声明和定义******实例化***方法调用(函数调用)***
     /// 方法头：访问修饰符、静态修饰符、返回类型、方法名、形参(还有修饰符)
     /// 方法体：局部变量、控制流结构(条件、循环、跳转)、方法调用、内嵌的块、其他方法(局部函数)
     /// var关键字只能用于局部变量，不能用于字段(类、结构体的变量)；只能在变量声明中包含初始化时使用
@@ -18,6 +19,11 @@ namespace Method
     /// 位置参数：每一个实参的位置必须和相应的形参位置对应
     /// 命名参数：方法声明不变，方法的调用中包含参数名，就可以不按顺序调用
     /// 位置参数和命名参数同时使用时，所有位置参数必须先列出
+    /// 可选参数：在调用方法的时候可以不提供实参，实参可以是可选的（需要在方法声明中为参数提供默认值）
+    ///     ---在编译时可以确认的值类型、默认值为null的引用类型
+    ///     ---可选参数的省略必须从最后往前顺序省略
+    ///     ---如果想要随意省略可选参数，就需要结合命名参数的特性
+    /// 在方法声明中，必填参数---可选参数---params参数
     /// </summary>
     class MethodTest
     {
@@ -105,6 +111,20 @@ namespace Method
             Console.WriteLine($"nameResult:{nameResult}");
             Console.WriteLine("******************************");
 
+            //可选参数
+            var choosAble = new SelectAble();
+            var select1 = choosAble.Calc(5,6);
+            Console.WriteLine("select1:{0}", select1);
+            var select2 = choosAble.Calc(5);
+            Console.WriteLine("select2:{0}", select2);
+            Console.WriteLine("******************************");
+
+            //递归
+            var factorial = new Factorial();
+            var factorialResult = factorial.CalculateFactorial(5);
+            Console.WriteLine("factorialResult:{0}", factorialResult);
+            Console.WriteLine("******************************");
+            
         }
         
     }
@@ -136,5 +156,22 @@ namespace Method
         long AddValues(int c, int d, int e) => c + d + e;   //参数的数目
         long AddValues(float f, float g) => (long)(f+g);    //参数的数据类型
         long AddValues(long h, long m) => h + m;    //参数的数据类型
+    }
+    class SelectAble    //可选参数
+    {
+        public int Calc(int a, int b = 3)
+        {
+            return a + b;
+        }
+    }
+    class Factorial //递归类
+    {
+        public long CalculateFactorial(int n)
+        {
+            if(n == 0 || n == 1)
+                return 1;
+            else
+                return n*CalculateFactorial(n-1);
+        }
     }
 }
