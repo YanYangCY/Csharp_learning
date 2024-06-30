@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 
 namespace ClassGm
 {
@@ -12,6 +13,10 @@ namespace ClassGm
     /// 属性会自动隐式调用，显式调用访问器会编译错误；个人理解为就是字段(成员变量)，不过就是另类的成员
     /// 属性正常会和私有字段联合使用
     /// C#6.0版本开始提供自动实现属性，不需要对字段赋值，int类型默认0，bool类型默认false,引用类型默认null；
+    /// 静态属性和方法可以在不实例化类的情况下直接调用
+    /// 实例构造函数---一种特殊的方法，在创建每个类的新实例的时候执行（1.构造函数的名称与类名相同；2.构造函数不能有返回值；3.构造函数用于初始化类实例的状态）
+    /// 带参数的构造函数---1.可以带参数；2.可以被重载
+    /// 如果类声明中没有显示的创建构造函数，编译器会提供默认构造函数
     /// </summary>
     class ClassGm
     {
@@ -53,6 +58,21 @@ namespace ClassGm
             D.MyStaticValue = 10;
             Console.WriteLine($"静态属性赋值后，输出：{D.MyStaticValue}");
 
+
+            // 构造函数的使用
+            MyClass obj1 = new MyClass();   //创建一个 MyClass 的实例          
+            obj1.DisplayInstantiationTime();    //调用方法显示实例化时间            
+            MyClass obj2 = new MyClass();   //创建另一个 MyClass 的实例           
+            obj2.DisplayInstantiationTime();    //调用方法显示另一个实例化时间
+
+            //构造函数带参数及重载的测试
+            MyClass2 obj3 = new MyClass2();
+            MyClass2 obj4 = new MyClass2("YY");
+            MyClass2 obj5 = new MyClass2("CY",25);
+            Console.WriteLine($"obj3: Name={obj3.Name}, Age={obj3.Age}");
+            Console.WriteLine($"obj4: Name={obj4.Name}, Age={obj4.Age}");
+            Console.WriteLine($"obj5: Name={obj5.Name}, Age={obj5.Age}");
+
         }
 
 
@@ -87,6 +107,41 @@ namespace ClassGm
         public void Display(string str)
         {
             Console.WriteLine($"{str}: Mem3 = {Mem3}, Mem4 = {Mem4}");
+        }
+    }
+    //在类中使用构造函数初始化其字段
+    class MyClass
+    {
+        DateTime TimeOfInstantiation;
+        public  MyClass() //构造函数
+        { 
+            TimeOfInstantiation = DateTime.Now; //初始化字段
+        }
+        // 方法：获取实例化时间
+        public void DisplayInstantiationTime()
+        {
+            Console.WriteLine($"This instance of MyClass was created at: {TimeOfInstantiation.ToString("yyyy-MM-dd HH:mm:ss.fff")}");   //精确到毫秒
+        }
+    }
+    //构造函数带参数及重载情况分析
+    class MyClass2
+    {
+        public string Name { get; set; }
+        public int Age { get; set; }
+        public MyClass2()   //默认构造函数
+        {
+            Name = "Unknown";
+            Age = 0;
+        }
+        public MyClass2(string name)    //带一个参数的构造函数重载
+        {
+            Name = name;
+            Age = 0;
+        }
+        public MyClass2(string name, int age)  ////带两个参数的构造函数重载
+        {
+            Name = name;
+            Age = age;
         }
     }
 }
