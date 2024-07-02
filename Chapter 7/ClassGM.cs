@@ -16,7 +16,10 @@ namespace ClassGm
     /// 静态属性和方法可以在不实例化类的情况下直接调用
     /// 实例构造函数---一种特殊的方法，在创建每个类的新实例的时候执行（1.构造函数的名称与类名相同；2.构造函数不能有返回值；3.构造函数用于初始化类实例的状态）
     /// 带参数的构造函数---1.可以带参数；2.可以被重载
-    /// 如果类声明中没有显示的创建构造函数，编译器会提供默认构造函数
+    /// 如果类声明中没有显示的创建构造函数，编译器会提供默认构造函数---没有参数、方法体为空（如果声明了任意构造函数、则不会自动生成无参数的默认构造函数）
+    /// 静态构造函数（不能有访问修饰符）---通常静态构造函数初始化类的静态字段
+    /// 对象初始化语句---创建新的对象时，初始化字段以及属性的值；（不能对构造函数使用）
+    /// 
     /// </summary>
     class ClassGm
     {
@@ -73,6 +76,18 @@ namespace ClassGm
             Console.WriteLine($"obj4: Name={obj4.Name}, Age={obj4.Age}");
             Console.WriteLine($"obj5: Name={obj5.Name}, Age={obj5.Age}");
 
+            //初始化对象
+            MyPeople people1 = new MyPeople { Name = "YY", Age = 26 };
+            //集合初始化调用
+            List<MyPeople> myPeoples = new List<MyPeople> 
+            { 
+                new MyPeople {Name="CQH",Age=25 },
+                new MyPeople {Name="DJ", Age=24 }
+            };
+            Console.WriteLine($"Name:{myPeoples[0].Name},Age:{myPeoples[1].Age}");
+            //嵌套对象的初始化
+            MyPeople peopleHome = new MyPeople { Name ="YY",Age=25,Address = new MyPeopleHome { Nation = "China", City= "TaiZhou"} };
+            Console.WriteLine($"Nation:{peopleHome.Address.Nation}, CITY:{peopleHome.Address.City}");
         }
 
 
@@ -143,5 +158,18 @@ namespace ClassGm
             Name = name;
             Age = age;
         }
+    }
+    //对象初始化测试
+    public class MyPeople
+    {
+        public string Name { get; set; }
+        public int Age { get; set; }
+        public MyPeopleHome Address { get; set; }
+    }
+    public class MyPeopleHome //嵌套使用
+    {
+        public string Nation { get; set; }
+        public string City {  get; set; }
+
     }
 }
