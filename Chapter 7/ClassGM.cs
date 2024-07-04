@@ -19,8 +19,22 @@ namespace ClassGm
     /// 如果类声明中没有显示的创建构造函数，编译器会提供默认构造函数---没有参数、方法体为空（如果声明了任意构造函数、则不会自动生成无参数的默认构造函数）
     /// 静态构造函数（不能有访问修饰符）---通常静态构造函数初始化类的静态字段
     /// 对象初始化语句---创建新的对象时，初始化字段以及属性的值；（不能对构造函数使用）
-    /// 
+    /// 析构函数：执行在类的实例被销毁之前需要的清理或释放非托管资源的行为。
+    /// readonly 是一个修饰符，用于声明只读字段或只读静态字段。
+    ///     使用 readonly 修饰符的字段只能在声明时或者在构造函数内部进行赋值，之后无法再修改其值。
+    ///     这使得 readonly 字段在需要保持不变性或者在多线程环境下使用时非常有用。
+    /// this关键字：使用场景》字段和方法的形参名称相同，可以在方法体中使用this调用字段
+    /// 索引器：索引器是一组set和get访问器(自动调用)，与属性类似（属性正常表示单个数据成员，索引器正常表示多个数据成员）
+    /// 访问器的访问修饰符---1.属性或者索引器同时有set和get两个访问器时才可以使用访问修饰符
+    ///                 ---2.虽然两个访问器必须同时出现，但只能有一个访问修饰符
+    ///                 ---3.访问器的访问修饰符限制必须比成员的访问级别更严格
+    /// 分部类(partial)：分部类允许将一个类的定义分成多个部分，每个部分可以在不同的文件中实现。
+    ///        这种功能在大型项目中特别有用，可以让多个开发者同时工作在同一个类的不同部分上，而无需频繁地合并代码。
+    /// 分部结构：分部结构与分部类类似，但用于结构（struct）。
+    ///          结构是一种值类型，用于存储数据。分部结构的使用场景与分部类类似，允许将结构的定义分散在多个文件中。
+    /// 分布方法
     /// </summary>
+
     class ClassGm
     {
         static void Main(string[] args)
@@ -88,6 +102,13 @@ namespace ClassGm
             //嵌套对象的初始化
             MyPeople peopleHome = new MyPeople { Name ="YY",Age=25,Address = new MyPeopleHome { Nation = "China", City= "TaiZhou"} };
             Console.WriteLine($"Nation:{peopleHome.Address.Nation}, CITY:{peopleHome.Address.City}");
+
+            //索引器的使用
+            Employee employee = new Employee();
+            employee[0] = "yang";
+            employee[1] = "yan";
+            employee[2] = "TZ";
+            Console.WriteLine($"名字：{employee[1]} {employee[0]} ;出生地：{employee[2]}");
         }
 
 
@@ -171,5 +192,37 @@ namespace ClassGm
         public string Nation { get; set; }
         public string City {  get; set; }
 
+    }
+
+    //索引器示例
+    public class Employee
+    {
+        public string LastName;     //调用字段0
+        public string FirstName;    //调用字段1
+        public string CityOfBirth;  //调用字段2
+        public string this[int index]   //索引器声明
+        {
+            set 
+            {
+                switch (index) 
+                {
+                    case 0:LastName = value; break;
+                    case 1:FirstName = value; break;
+                    case 2:CityOfBirth = value; break;
+                    default:throw new ArgumentOutOfRangeException("index"); //抛出异常
+                }
+                
+            }
+            get 
+            {
+                switch (index) 
+                {
+                    case 0:return LastName;
+                    case 1:return FirstName;
+                    case 2:return CityOfBirth;
+                    default:throw new ArgumentOutOfRangeException("index");
+                }
+            }
+        }
     }
 }
