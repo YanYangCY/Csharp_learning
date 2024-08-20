@@ -5,21 +5,23 @@ VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Csharp_learning", "Csharp_learning\Csharp_learning.csproj", "{E115CD66-0738-4141-A68A-7158CDAB3E7A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chapter 3", "Chapter 3\Chapter 3.csproj", "{BD495DA5-D687-4674-B78D-090087B8D279}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chapter 003", "Chapter 3\Chapter 003.csproj", "{BD495DA5-D687-4674-B78D-090087B8D279}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chapter 4", "Chapter 4\Chapter 4.csproj", "{88B5AE0A-30A2-484B-AAC0-905075A88954}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chapter 004", "Chapter 4\Chapter 004.csproj", "{88B5AE0A-30A2-484B-AAC0-905075A88954}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YY", "YY\YY.csproj", "{01CAF9EC-227C-42C2-B25C-95D54A6B8EFD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chapter 6", "Chapter 6\Chapter 6.csproj", "{5C276F06-8F13-4556-A4F7-28D211097A86}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chapter 006", "Chapter 6\Chapter 006.csproj", "{5C276F06-8F13-4556-A4F7-28D211097A86}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chapter 5", "Chapter 5\Chapter 5.csproj", "{C9CA8CE0-F1B3-4829-8796-896C4B1B5C26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chapter 005", "Chapter 5\Chapter 005.csproj", "{C9CA8CE0-F1B3-4829-8796-896C4B1B5C26}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chapter 7", "Chapter 7\Chapter 7.csproj", "{D93F19A2-3DDF-4F26-9278-9E36910B2E33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chapter 007", "Chapter 7\Chapter 007.csproj", "{D93F19A2-3DDF-4F26-9278-9E36910B2E33}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chapter 8", "Chapter 8\Chapter 8.csproj", "{55218E75-9D9A-4C2E-947B-178125E87CD1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chapter 008", "Chapter 8\Chapter 008.csproj", "{55218E75-9D9A-4C2E-947B-178125E87CD1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chapter 9", "Chapter 9\Chapter 9.csproj", "{281C144A-B4FE-46AA-9B73-4CCDD9E96A90}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chapter 009", "Chapter 9\Chapter 009.csproj", "{281C144A-B4FE-46AA-9B73-4CCDD9E96A90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chapter 010", "Chapter 10\Chapter 010.csproj", "{17320AA7-CDE2-4650-A69B-E56775DB6FDA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{281C144A-B4FE-46AA-9B73-4CCDD9E96A90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{281C144A-B4FE-46AA-9B73-4CCDD9E96A90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{281C144A-B4FE-46AA-9B73-4CCDD9E96A90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17320AA7-CDE2-4650-A69B-E56775DB6FDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17320AA7-CDE2-4650-A69B-E56775DB6FDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17320AA7-CDE2-4650-A69B-E56775DB6FDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17320AA7-CDE2-4650-A69B-E56775DB6FDA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
