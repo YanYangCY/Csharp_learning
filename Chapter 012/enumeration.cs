@@ -70,7 +70,7 @@ namespace Chapter_012
             CardDeckSettings ops1 = CardDeckSettings.SingleDeck | CardDeckSettings.FancyNumbers | CardDeckSettings.Animation;
             mc.SetOptions( ops1 );
             mc.PrintOptions();
-            Console.WriteLine("######位标志测试#####################");
+            Console.WriteLine("######访问枚举成员测试###############");
             Console.WriteLine($"{(int)Red}");
 
         }       
