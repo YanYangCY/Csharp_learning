@@ -56,10 +56,34 @@
     ///     13.7.5 隐式类型数组
     ///         可以使用Var关键字声明，等编译器根据初始化语句的类型推断数组类型
     ///     13.7.6 综合内容
+    /// 13.8 交错数组
+    ///     13.8.1 声明交错数组
+    ///         交错数组声明要求每一个维度都有一对独立的方括号；方括号的数量决定了数组的秩
+    ///         int[][] SomeArr; //秩为2      int[][][] SomeArr; //秩为3
+    ///     13.8.2 快捷实例化
+    ///         int[][] jagArr = new int[3][];  //3个子数组
+    ///         int[][] jagArr = new int[3][4]; //编译错误；不能在声明语句中初始化顶层数组之外的数组
+    ///     13.8.3 实例化交错数组
+    ///         int[][] Arr = new int[3][]; //1.实例化顶层数组
+    ///         Arr[0] = new int[]{10,20,30};   //2.实例化子数组
+    ///         Arr[1] = new int[]{40,50,60,70};    //3.实例化子数组
+    ///         Arr[2] = new int[]{80,90,100,110,120};  //4.实例化子数组
+    ///     13.8.4 交错数组中的子数组
+    ///         交错数组中的子数组本身就是数组，所以既可以是一维数组也可以是矩形数组
+    /// 13.9 比较矩形数组和交错数组
+    /// 13.10 foreach 语句
+    ///     foreach 语句允许我们连续访问数组中的每一个元素
+    ///         1.迭代变量是临时的，并且和数组中的元素是同一种类型
+    ///         2.Type是数组中元素的类型；Identifier是迭代变量的名字；
+    ///           ArrayName是要处理的数组名称；Statement是要为数组中每一个元素执行一次的单条语句或语句块
+    ///         foreach(Type Identifier in ArrayName)   //显式类型迭代变量声明
+    ///             Statement
+    ///         foreach(Var Identifier in ArrayName)    //隐式类型迭代变量声明
+    ///             Statement
     /// 
     /// 
     /// </summary>
-    public class Program
+    public class LearnArray
     {
         static void Main(string[] args)
         {
@@ -70,7 +94,34 @@
             int thirdElementInSecondRow = jaggedArray[1][2]; // 输出 5
             Console.WriteLine("交错数组测试：{0}，{1}",firstElementInJagged,thirdElementInSecondRow);
             Console.WriteLine("####################################");
-            
+            Console.WriteLine("######13.7.6综合内容#################");
+            var arr = new int[,] { {0, 1, 2}, {10, 11, 12} };
+            for(int i = 0; i < 2; i++)
+                for(int j = 0; j < 3; j++)
+                    Console.WriteLine($"Element [{i},{j}] is {arr[i,j]}");           
+            Console.WriteLine("####################################");
+            Console.WriteLine("######交错数组中的子数组##############");
+            int[][,] Arr = new int[3][,]; // 带有二维数组的交错数组并实例化
+            Arr[0] = new int[,] { {10, 20},{100, 200} };
+            Arr[1] = new int[,] { { 30, 40, 50 }, { 300, 400, 500 } };
+            Arr[2] = new int[,] { { 60, 70, 80, 90 }, { 600, 700, 800, 900 } };
+            for(int i = 0;i < Arr.GetLength(0);i++)
+            {
+                for(int j = 0;j < Arr[i].GetLength(0);j++)
+                {
+                    for (int k = 0; k < Arr[i].GetLength(1); k++)
+                    {
+                        Console.WriteLine($"[{i}][{j},{k}] = {Arr[i][j,k]}");
+                    }
+                }
+            }
+            Console.WriteLine("####################################");
+            Console.WriteLine("######foreach迭代循环遍历数组#########");
+            int[,] arrForeach = new int[,] { { 10,20,30},{ 20,30,40} };
+            foreach(int x in arrForeach)
+                Console.WriteLine($"Item Value:{x}");
+            Console.WriteLine("####################################");
+
         }
         //矩形数组
         static int[,] rectangularArray = new int[3, 2]
