@@ -86,6 +86,7 @@
     ///     值类型数组没有协变，只有引用类型
     ///     赋值的对象类型和数组基类型之间有隐式转换或显式转换
     /// 13.12 数组继承的有用成员    
+    ///     派生自System.Array类
     ///     ——————————————————————————————————————————————————————————————————————————————————
     ///     成 员         类 型      生存期                             意义
     ///     ——————————————————————————————————————————————————————————————————————————————————
@@ -94,13 +95,13 @@
     ///     GetLength     方法       实例          返回数组的指定维度的长度
     ///     Clear         方法       静态          将某一范围内的元素设置为0或null
     ///     Sort          方法       静态          在一维数组中对元素进行排序
-    ///     BinarySearch  方法       静态          使用二进制搜索，搜索一维数组中的值
+    ///     BinarySearch  方法       静态          使用二进制搜索，搜索一维数组中的值(只能顺序查找)
     ///     Clone         方法       实例          进行数组的浅复制————对于值类型和引用类型数组，都只复制元素
     ///     IndexOf       方法       静态          返回一维数组中遇到的第一个值
     ///     Reverse       方法       静态          反转一维数组中某一范围内的元素
     ///     GetUpperBound 方法       实例          获取指定维度的上限
     ///     ——————————————————————————————————————————————————————————————————————————————————
-    /// 
+    ///     注：BinarySearch不能对逆向排序的数组进行查找，不考虑性能的前提下，可以使用Array.FindIndex
     /// 
     /// 
     /// 
@@ -151,7 +152,29 @@
             // 协变：将B类型的对象赋值给A类型的数组
             AArray2[0] = new B(); AArray2[1] = new B(); AArray2[2] = new B();
             Console.WriteLine("####################################");
-
+            Console.WriteLine("######数组继承的有用成员##############");
+            int[] arrMethod = new int[] { 15, 20, 5, 25, 10 };
+            PrintArray(arrMethod);
+            // 在一维数组中对元素进行排序
+            Array.Sort(arrMethod);
+            PrintArray(arrMethod);
+            // 反转一维数组中某一范围内的元素
+            Array.Reverse(arrMethod);
+            PrintArray(arrMethod);
+            // Rank Length GetLength GetType
+            Console.WriteLine($"Rank = {arrMethod.Rank}, Length = {arrMethod.Length}");
+            Console.WriteLine($"GetLength(0) = {arrMethod.GetLength(0)}");
+            Console.WriteLine($"GetType()    = {arrMethod.GetType()}");
+            // 使用二进制搜索，搜索一维数组中的值
+            // 注：数组必须是已经排序了的，且不能是逆向排序
+            int index = Array.BinarySearch(arrMethod, 5);
+            Console.WriteLine($"{index}");
+            // clone方法:会产生两个独立数组；返回的是object类型的引用，必须进行强制转换
+            // 克隆引用类型数组会产生指向相同对象的两个数组
+            int[] arrMeehodClone = (int[])arrMethod.Clone();
+            PrintArray(arrMeehodClone);
+            Console.WriteLine("####################################");
+            
         }
         //矩形数组
         static int[,] rectangularArray = new int[3, 2]
@@ -166,9 +189,14 @@
             new int[2] {1, 2},
             new int[3] {3, 4, 5},
             new int[1] {6}
-        };
-        //数组协变
-        class A { }
-        class B: A { }
+        };  
+        public static void PrintArray(int[] a)
+        {
+            foreach (int x in a) Console.Write($"{x} ");
+            Console.WriteLine("");
+        }
     }
+    //数组协变
+    class A { }
+    class B : A { }
 }
