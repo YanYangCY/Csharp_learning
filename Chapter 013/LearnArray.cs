@@ -102,9 +102,9 @@
     ///     GetUpperBound 方法       实例          获取指定维度的上限
     ///     ——————————————————————————————————————————————————————————————————————————————————
     ///     注：BinarySearch不能对逆向排序的数组进行查找，不考虑性能的前提下，可以使用Array.FindIndex
-    /// 
-    /// 
-    /// 
+    /// 13.13 比较数组类型
+    ///     一维数组在CIL中有优化指令
+    /// 13.14 数组与ref返回和ref局部变量
     /// </summary>
     public class LearnArray
     {
@@ -173,8 +173,15 @@
             // 克隆引用类型数组会产生指向相同对象的两个数组
             int[] arrMeehodClone = (int[])arrMethod.Clone();
             PrintArray(arrMeehodClone);
+            Console.WriteLine("####################################"); 
+            Console.WriteLine("######数组与ref返回和ref局部变量######");
+            int[] scores = { 5, 80 };
+            Console.WriteLine($"Beefore:{scores[0]},{scores[1]}");           
+            ref int locationOfHigher = ref ArrayAndRef.PointerToHighestPositive(scores); // 静态方法不需要实例化类
+            locationOfHigher = 0;
+            Console.WriteLine($"After:{scores[0]},{scores[1]}");
             Console.WriteLine("####################################");
-            
+
         }
         //矩形数组
         static int[,] rectangularArray = new int[3, 2]
@@ -188,7 +195,7 @@
         {
             new int[2] {1, 2},
             new int[3] {3, 4, 5},
-            new int[1] {6}
+            new int[1] { 6 }
         };  
         public static void PrintArray(int[] a)
         {
@@ -196,7 +203,25 @@
             Console.WriteLine("");
         }
     }
-    //数组协变
+    // 数组协变
     class A { }
     class B : A { }
+    // 数组与ref返回和ref局部变量
+    class ArrayAndRef
+    {
+        public static ref int PointerToHighestPositive(int[] numbers)   // 最大正数
+        {
+            int highest = 0;
+            int indexOfHighests = 0;
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                if (numbers[i] > highest)
+                {
+                    indexOfHighests = i;
+                    highest = numbers[indexOfHighests];
+                }
+            }
+            return ref numbers[indexOfHighests];
+        }
+    }
 }
