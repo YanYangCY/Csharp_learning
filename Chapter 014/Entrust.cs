@@ -4,6 +4,8 @@
     delegate void MyDel(int value);
     delegate int MyDle2(int x, int y);
     delegate void PrintFunction();
+    delegate void MyAdd(ref int x);
+    delegate int OtherMethod(int InParam);
     /// <summary>
     /// 14.1 什么是委托
     ///     委托主要用于实现回调函数、事件处理、多线程编程中的异步编程模式（如APM、EAP、TAP）、
@@ -45,10 +47,43 @@
     /// 14.11 调用带返回值的委托
     ///     如果委托有返回值并且调用列表有多个方法：返回调用列表中最后一个方法的返回值，其他返回值都会忽略
     /// 14.12 调用带引用参数的委托
-    ///     
-    /// 
-    /// 
-    ///     
+    /// 14.13 匿名方法
+    ///     之前使用的静态方法或实例方法来实例化委托
+    ///     如果方法只被使用一次，就可以使用匿名方法；匿名方法是在实例化委托时内联声明的方法
+    ///     14.13.1 使用匿名方法
+    ///         ※声明委托变量时作为初始化表达式
+    ///         ※组合委托时在赋值语句的右边
+    ///         ※为委托增加事件时在赋值语句的右边
+    ///     14.13.2 匿名方法的语法
+    ///         delegate (Parameters) { ImplementationCode }
+    ///           关键字   参数列表         语句块
+    ///         2.参数：除了数组参数，匿名方法的参数列表必须在3个方面和委托匹配：参数数量、参数类型及位置、修饰符
+    ///         ※可以通过使圆括号为空或者省略圆括号来简化匿名方法的参数列表，但是必须满足：委托的参数列表不包含out参数、匿名方法不使用任何参数
+    ///         3.params参数：params 关键字在C#中用于在方法定义中指定一个参数数组，它允许你向方法传递数量可变的参数列表
+    ///             如果委托声明的参数列表包含了params参数，那么匿名方法的参数列表将忽略params关键字
+    ///      14.13.3 变量和参数的作用域
+    ///         参数以及声明在匿名方法内部的局部变量的作用域限制在实现代码的主体之内，匿名方法结束则失效
+    ///         1.外部变量
+    ///         与委托的具名方法不同，匿名方法可以访问它们外围作用域的局部变量和环境
+    ///             外围作用域的变量叫作外部变量
+    ///             用在匿名方法实现代码中的外部变量称为被方法捕获
+    ///         2.捕获变量的生命周期的扩展
+    ///         只要捕获方法是委托的一部分，即使变量已经离开了作用域，捕获的外部变量也会一直有效
+    ///             委托中的匿名方法在它的环境中保留了外部变量
+    /// 14.14 Lambda表达式         
+    ///     C#2.0引入了匿名方法，但是它的语法较长；C#3.0引入了Lambda表达式，简化了匿名方法的语法
+    ///     ※删除delegate关键字
+    ///     ※在参数列表和匿名主体之间放置Lambda运算符 => ，读做“goes to”
+    ///     Mydel del = delegate(int x)    { return x+1;};   //匿名方法    
+    ///     Mydel le1 =         (int x) => { return x+1;};   //Lambda表达式 
+    ///     Mydel le2 =             (x) => { return x+1;};   //Lambda表达式 
+    ///     Mydel le3 =              x  => { return x+1;};   //Lambda表达式 
+    ///     Mydel le4 =              x  =>   return x+1  ;   //Lambda表达式 
+    ///     由于编译器可以从委托声明中知道委托参数的类型，使用可以简化编写
+    ///     ※Labbda表达式参数列表中的参数必须在参数数量、类型和位置上与委托相匹配
+    ///     ※表达式的参数列表中的参数正常可以使用隐式类型，除非委托有ref或out参数---此时必须显式注明类型
+    ///     ※如果只有一个参数而且是隐式类型，则两端的圆括号可以省略，否则必须有括号
+    ///     ※如果没有参数，必须使用一组空的圆括号
     /// </summary>
     public class Entrust
     {
@@ -86,6 +121,21 @@
             else
                 Console.WriteLine("Delegate is empty");
             Console.WriteLine("####################################");
+            Console.WriteLine("######调用带引用参数的委托############");
+            MyClass myClass = new MyClass();
+            MyAdd myAdd = myClass.Add2;
+            myAdd += myClass.Add3;
+            myAdd += myClass.Add2;
+            int x = 5;
+            myAdd(ref x);
+            Console.WriteLine($"Value:{x}");
+            Console.WriteLine("####################################");
+            Console.WriteLine("######匿名方法#######################");
+            OtherMethod oM = delegate (int x) { return x + 20; };
+            Console.WriteLine($"{oM(5)}");
+            Console.WriteLine($"{oM(6)}");
+            Console.WriteLine("####################################");
+
         }
     }
     // 什么是委托
@@ -111,5 +161,13 @@
         {
             Console.WriteLine("Print2 --- static");
         }
+    }
+    // 调用带引用参数的委托
+    class MyClass
+    {
+        public void Add2(ref int x)
+        { x += 2; }
+        public void Add3(ref int x)
+        { x += 3; }
     }
 }
