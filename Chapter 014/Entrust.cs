@@ -1,11 +1,5 @@
 ﻿namespace Chapter_014
 {
-    //声明委托类型
-    delegate void MyDel(int value);
-    delegate int MyDle2(int x, int y);
-    delegate void PrintFunction();
-    delegate void MyAdd(ref int x);
-    delegate int OtherMethod(int InParam);
     /// <summary>
     /// 14.1 什么是委托
     ///     委托主要用于实现回调函数、事件处理、多线程编程中的异步编程模式（如APM、EAP、TAP）、
@@ -85,6 +79,13 @@
     ///     ※如果只有一个参数而且是隐式类型，则两端的圆括号可以省略，否则必须有括号
     ///     ※如果没有参数，必须使用一组空的圆括号
     /// </summary>
+    
+    //声明委托类型
+    delegate void MyDel(int value);
+    delegate int MyDle2(int x, int y);
+    delegate void PrintFunction();
+    delegate void MyAdd(ref int x);
+    delegate int OtherMethod(int InParam);
     public class Entrust
     {
         static void Main(string[] args)
