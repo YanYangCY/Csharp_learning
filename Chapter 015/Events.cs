@@ -18,10 +18,14 @@
     /// 15.5 触发事件
     /// 15.6 标准事件的用法
     ///     15.6.1 通过拓展EventArgs来传递数据
-    /// 
+    ///         EventArgs不能传递数据，必须声明一个派生自EventArgs的类，然后在类中使用合适的字段
+    ///     15.6.2 移除事件处理程序
+    ///         在用完事件处理程序之后，可以从事件中把它移除，使用-=运算符
+    /// 15.7 事件访问器
+    ///     两个访问器：add和remove
     /// 
     /// </summary>
-
+    
     public delegate void Handler(); // 声明一个无参数、无返回值的委托
     public class Events
     {
@@ -51,22 +55,27 @@
         public void DoCount()
         {
             IncrementerEventArgs args = new IncrementerEventArgs(); // 自定义类对象
-            for (int i = 1; i <= 100; i++) 
-                if (i % 10 == 0 && CountedADozen != null)                
+            for (int i = 1; i <= 100; i++)
+                if (i % 10 == 0 && CountedADozen != null)
+                {
+                    args.IterationCount = i;
                     CountedADozen(this, args);    // 触发事件
+                }
         }
     }
     //订阅者
     public class Dozens
     {
+        
         public int DozensCount { get; private set; }
         public Dozens(Incrementer incrementer)
         {
             DozensCount = 0;
             incrementer.CountedADozen += IncrementDozensCount;  //订阅事件
         }
-        void IncrementDozensCount() // 声明事件处理程序
+        void IncrementDozensCount(object source, IncrementerEventArgs e) // 声明事件处理程序
         {
+            Console.WriteLine($"Incremented at iteration:{e.IterationCount} in {source.ToString()}");
             DozensCount++;
         }
     }
@@ -75,6 +84,41 @@
     {
         public int IterationCount { get; set; } // 存储一个整数
     }
+    
+
+    /*
+    // 移除事件处理程序示例
+    public class Events
+    {
+        static void Main(string[] args)
+        { 
+            Publisher p = new Publisher();
+            Subscriber s = new Subscriber();
+            p.SimpleEvent += s.MethodA;
+            p.SimpleEvent += s.MethodB;
+            p.RaiseTheEvent();
+            Console.WriteLine("\r\nRemove MethodB!");
+            p.SimpleEvent -= s.MethodB;
+            p.RaiseTheEvent();
+        }
+    }
+    // 发布者
+    public class Publisher
+    {
+        public event EventHandler SimpleEvent;  // 声明事件
+        // 触发事件
+        public void RaiseTheEvent()
+        {
+            SimpleEvent(this,null);
+        }
+    }
+    // 订阅者
+    public class Subscriber
+    {
+        public void MethodA(object o, EventArgs e) { Console.WriteLine("AAA"); }
+        public void MethodB(object o, EventArgs e) { Console.WriteLine("BBB"); }
+    }
+    */
 }
 
 
