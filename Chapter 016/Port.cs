@@ -17,6 +17,12 @@
     ///     要实现接口，类和结构必须：1.在基类列表中包括接口名称；2.为每一个接口成员提供实现
     ///         1.如果类实现了接口，它必须实现接口的所有成员
     ///         2.如果类派生自基类并实现接口，基类列表中的基类名称必须放在所有接口之前
+    /// 16.4 接口是引用类型
+    ///     通过把类对象引用强制转换为接口类型来获取指向接口的引用
+    /// 16.5 接口和as运算符
+    ///     尝试将类对象引用强制转换为类未实现的接口的引用，强制转换操作会抛出一个异常，可以通过as运算符避免
+    ///     
+    /// 
     /// </summary>
     /// 
     public class Port
@@ -56,6 +62,24 @@
             Array.Sort(myClasses);  // 数组排序
             PrintOut("Sorted  Order: ",myClasses);
             Console.WriteLine("####################################");
+            Console.WriteLine("######接口是引用类型#################");
+            MyClass2 myClass = new MyClass2();  // 创建类对象
+            myClass.PrintOut("object"); // 调用类对象的实现方法
+            IIfc1 ifc1 = (IIfc1)myClass;    // 将类对象的引用转换为接口类型的引用
+            ifc1.PrintOut("interface"); // 调用接口方法
+            Console.WriteLine("####################################");
+            Console.WriteLine("######as运算符######################");
+            MyClass2 myClass2 = new MyClass2();
+            myClass2.PrintOut("object");
+            IIfc1 ifc2 = myClass2 as IIfc1;
+            if ( ifc2 != null )
+                ifc2.PrintOut("as is ok!");
+            IInfo ifc3 = myClass2 as IInfo;
+            if ( ifc3 != null )
+                Console.WriteLine("asok!");
+            else
+                Console.WriteLine("asng!");
+            Console.WriteLine("####################################");
         }
     }
     interface IInfo // 声明接口
@@ -67,6 +91,10 @@
     {
         int DoStuff(int nVar1, long lVar2); // 分号代替了主体
         double DoOtherStuff(string s, long x);
+    }
+    interface IIfc1
+    {
+        void PrintOut(string s);
     }
     public class CA : IInfo // CA调用接口
     {
@@ -98,7 +126,7 @@
             return 0;
         }
     }
-    public class Myclass : IMyInterface1   // 实现接口
+    public class MyClass1 : IMyInterface1   // 实现接口
     {
         public int DoStuff(int nVar1, long lVar2)
         {
@@ -107,6 +135,13 @@
         public double DoOtherStuff(string s, long x)
         {
             return 0;
+        }
+    }
+    public class MyClass2 : IIfc1
+    {
+        public void PrintOut(string s)
+        {
+            Console.WriteLine($"Calling through: {s}");
         }
     }
 
