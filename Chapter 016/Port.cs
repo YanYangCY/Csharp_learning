@@ -21,7 +21,9 @@
     ///     通过把类对象引用强制转换为接口类型来获取指向接口的引用
     /// 16.5 接口和as运算符
     ///     尝试将类对象引用强制转换为类未实现的接口的引用，强制转换操作会抛出一个异常，可以通过as运算符避免
-    ///     
+    /// 16.6 实现多个接口
+    ///     1.类和结构可以实现任意数量的接口
+    ///     2.所有实现的接口必须列在基类的列表中并以逗号分隔（如果有基类名称，接口在基类之后）
     /// 
     /// </summary>
     /// 
@@ -80,6 +82,11 @@
             else
                 Console.WriteLine("asng!");
             Console.WriteLine("####################################");
+            Console.WriteLine("######实现多个接口###################");
+            MyData myData = new MyData();
+            // myData.SetData(379);
+            Console.WriteLine($"The SetData is : {myData.GetData()} !");
+            Console.WriteLine("####################################");
         }
     }
     interface IInfo // 声明接口
@@ -95,6 +102,14 @@
     interface IIfc1
     {
         void PrintOut(string s);
+    }
+    interface IDataRetrieve
+    {
+        int GetData();
+    }
+    interface IDataStore
+    {
+        void SetData(int x);
     }
     public class CA : IInfo // CA调用接口
     {
@@ -142,6 +157,19 @@
         public void PrintOut(string s)
         {
             Console.WriteLine($"Calling through: {s}");
+        }
+    }
+    public class MyData : IDataRetrieve, IDataStore
+    {
+        int Mem1;   // 声明字段,类的字段如果没有显式初始化，会自动设置为默认值
+
+        public int GetData()
+        {
+            return Mem1;
+        }
+        public void SetData(int x) 
+        {
+            Mem1 = x;
         }
     }
 
