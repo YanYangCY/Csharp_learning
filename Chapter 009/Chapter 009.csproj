@@ -8,8 +8,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Chapter 10\Chapter 010.csproj" />
-  </ItemGroup>
-
 </Project>

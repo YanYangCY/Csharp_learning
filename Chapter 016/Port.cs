@@ -1,4 +1,6 @@
-﻿namespace Chapter_016
+﻿using System.Runtime.InteropServices;
+
+namespace Chapter_016
 {
     /// <summary>
     /// 16.1 什么是接口:接口定义了行为，而继承则用于代码复用和拓展
@@ -24,45 +26,51 @@
     /// 16.6 实现多个接口
     ///     1.类和结构可以实现任意数量的接口
     ///     2.所有实现的接口必须列在基类的列表中并以逗号分隔（如果有基类名称，接口在基类之后）
-    /// 
+    /// 16.7 实现具有重复成员的接口
+    ///     1.如果一个类实现了多个接口，且接口中具有相同的签名和返回类型，那么类可以实现单个成员满足所有包含重复成员的接口
+    ///     2.如果只是成员名称重复，但是方法重载的话就不干涉，且实现两个接口就需要在类中 实现两个成员方法
+    /// 16.8 多个接口的引用
+    ///     从之前调用接口的类对象引用可以强制转换为接口类型，来获取一个指向接口的引用；
+    ///     如果类实现了多个接口，可以获取每一个接口的独立引用
+    ///     
     /// </summary>
     /// 
     public class Port
     {
         static void PrintInfo(IInfo item)
         {
-            Console.WriteLine("Name:{0},Age:{1}!",item.GetName(),item.GetAge()) ;
+            Console.WriteLine("Name:{0},Age:{1}!", item.GetName(), item.GetAge());
         }
         static void PrintOut(string s, MyClass[] mc)
         {
             Console.Write(s);
-            foreach(var m in mc)
+            foreach (var m in mc)
                 Console.Write($"{m.TheValue} ");
             Console.WriteLine("");
         }
         public static void Main(string[] args)
-        {           
+        {
             Console.WriteLine("######接口的用法#####################");
-            CA cA = new CA() { Name = "CA", Age = 26};
-            CB cB = new CB() { First = "C", Last = "B", PersonsAge = 25};
+            CA cA = new CA() { Name = "CA", Age = 26 };
+            CB cB = new CB() { First = "C", Last = "B", PersonsAge = 25 };
             PrintInfo(cA);
             PrintInfo(cB);
             Console.WriteLine("####################################");
             Console.WriteLine("######使用IComparable接口的示例######");
-            var myInt = new[] { 20,4,16,9,2};
+            var myInt = new[] { 20, 4, 16, 9, 2 };
             /*Array.Sort(myInt);  // 使用Array类的静态Sort方法对元素排序
             foreach(var i in myInt)
                 Console.Write($"{i} ");
             Console.WriteLine();*/
             MyClass[] myClasses = new MyClass[5];   // 创建MyClass对象的数组
-            for(int i = 0; i < myInt.Length; i++)   // 初始化数组
+            for (int i = 0; i < myInt.Length; i++)   // 初始化数组
             {
                 myClasses[i] = new MyClass();
                 myClasses[i].TheValue = myInt[i];
             }
             PrintOut("Initial Order: ", myClasses);
             Array.Sort(myClasses);  // 数组排序
-            PrintOut("Sorted  Order: ",myClasses);
+            PrintOut("Sorted  Order: ", myClasses);
             Console.WriteLine("####################################");
             Console.WriteLine("######接口是引用类型#################");
             MyClass2 myClass = new MyClass2();  // 创建类对象
@@ -74,10 +82,10 @@
             MyClass2 myClass2 = new MyClass2();
             myClass2.PrintOut("object");
             IIfc1 ifc2 = myClass2 as IIfc1;
-            if ( ifc2 != null )
+            if (ifc2 != null)
                 ifc2.PrintOut("as is ok!");
             IInfo ifc3 = myClass2 as IInfo;
-            if ( ifc3 != null )
+            if (ifc3 != null)
                 Console.WriteLine("asok!");
             else
                 Console.WriteLine("asng!");
@@ -87,6 +95,20 @@
             // myData.SetData(379);
             Console.WriteLine($"The SetData is : {myData.GetData()} !");
             Console.WriteLine("####################################");
+            Console.WriteLine("######实现具有重复成员的接口##########");
+            MyRepateInterface myRepateInterface = new MyRepateInterface();
+            myRepateInterface.PrintOut("object");
+            Console.WriteLine("####################################");
+            Console.WriteLine("######多个接口的引用#################");
+            MyRepateInterface repateCite = new MyRepateInterface();
+            IIfc1 ifc11 = repateCite as IIfc1;  // IIfc1 ifc11 = (IIfc1)repateCite;都属于强制转换，但是as可以抛出异常
+            IIfc2 ifc22 = repateCite as IIfc2;
+            repateCite.PrintOut("object");
+            ifc11.PrintOut("interface 1");
+            ifc22.PrintOut("interface 2");
+            Console.WriteLine("####################################");
+
+
         }
     }
     interface IInfo // 声明接口
@@ -110,6 +132,10 @@
     interface IDataStore
     {
         void SetData(int x);
+    }
+    interface IIfc2 // 与接口IIfc1具有相同的方法 
+    {
+        void PrintOut(string t);
     }
     public class CA : IInfo // CA调用接口
     {
@@ -136,8 +162,8 @@
         public int CompareTo(Object obj)    // 实现方法
         {
             MyClass mc = (MyClass)obj;
-            if(this.TheValue < mc.TheValue) return -1;
-            if(this.TheValue > mc.TheValue) return 1;
+            if (this.TheValue < mc.TheValue) return -1;
+            if (this.TheValue > mc.TheValue) return 1;
             return 0;
         }
     }
@@ -167,9 +193,16 @@
         {
             return Mem1;
         }
-        public void SetData(int x) 
+        public void SetData(int x)
         {
             Mem1 = x;
+        }
+    }
+    public class MyRepateInterface : IIfc1, IIfc2
+    {
+        public void PrintOut(string s)
+        {
+            Console.WriteLine($"Calling through : { s }");
         }
     }
 
