@@ -32,6 +32,8 @@ namespace Chapter_016
     /// 16.8 多个接口的引用
     ///     从之前调用接口的类对象引用可以强制转换为接口类型，来获取一个指向接口的引用；
     ///     如果类实现了多个接口，可以获取每一个接口的独立引用
+    /// 16.9 派生成员作为实现（派生成员：从基类继承的成员）
+    ///     接口中的方法声明和一个基类中的方法声明相匹配，如果一个类继承了这个基类且实现了前面的接口，那就不需要在主体中声明接口中的方法
     ///     
     /// </summary>
     /// 
@@ -106,6 +108,10 @@ namespace Chapter_016
             repateCite.PrintOut("object");
             ifc11.PrintOut("interface 1");
             ifc22.PrintOut("interface 2");
+            Console.WriteLine("####################################");
+            Console.WriteLine("######派生成员作为实现###############");
+            DeriverRealize myDeriver = new DeriverRealize();
+            myDeriver.PrintOut("object");
             Console.WriteLine("####################################");
 
 
@@ -205,6 +211,18 @@ namespace Chapter_016
             Console.WriteLine($"Calling through : { s }");
         }
     }
+    public class MyBaseClass    // 声明一个基类
+    {
+        public void PrintOut(string s)
+        {
+            Console.WriteLine($"Calling through : {s}");
+        }
+    }
+    public class DeriverRealize : MyBaseClass, IIfc1
+    {
+        // 从基类中派生获取到PrintOut方法，所以是派生成员实现了接口，这里不需要重复实现
+    }
+
 
 
     /*
