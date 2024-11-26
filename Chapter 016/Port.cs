@@ -34,9 +34,15 @@ namespace Chapter_016
     ///     如果类实现了多个接口，可以获取每一个接口的独立引用
     /// 16.9 派生成员作为实现（派生成员：从基类继承的成员）
     ///     接口中的方法声明和一个基类中的方法声明相匹配，如果一个类继承了这个基类且实现了前面的接口，那就不需要在主体中声明接口中的方法
+    /// 16.10 显式接口成员实现
+    ///     对16.7进行了完善，使用限定接口名称来声明
+    /// 16.11 接口可以继承接口
+    ///     一个类只能继承一个基类；接口可以继承任意多个接口
+    /// 16.12 不同类实现一个接口的实例
+    ///     
     ///     
     /// </summary>
-    /// 
+    
     public class Port
     {
         static void PrintInfo(IInfo item)
@@ -113,7 +119,18 @@ namespace Chapter_016
             DeriverRealize myDeriver = new DeriverRealize();
             myDeriver.PrintOut("object");
             Console.WriteLine("####################################");
-
+            Console.WriteLine("######显式接口成员实现###############");
+            ExplicitInterfaceRealization explicitInterface = new ExplicitInterfaceRealization();    // 创建类对象
+            IIfc1 ifc111 = explicitInterface as IIfc1;  // 获取IIfc1的引用
+            ifc111.PrintOut("iifc111");  // 调用显式实现
+            IIfc2 ifc222 = explicitInterface as IIfc2;
+            ifc222.PrintOut("iifc222");
+            Console.WriteLine("####################################");
+            Console.WriteLine("######接口可以继承接口###############");
+            MyInterfaceInheritInterface inheritInterface = new MyInterfaceInheritInterface();
+            inheritInterface.SetData(9);
+            Console.WriteLine($"My Data is : {inheritInterface.GetData()}");
+            Console.WriteLine("####################################");
 
         }
     }
@@ -142,6 +159,13 @@ namespace Chapter_016
     interface IIfc2 // 与接口IIfc1具有相同的方法 
     {
         void PrintOut(string t);
+    }
+    /// <summary>
+    /// 接口可以继承接口: 继承接口
+    /// </summary>
+    interface IDataIO : IDataRetrieve, IDataStore
+    {
+
     }
     public class CA : IInfo // CA调用接口
     {
@@ -222,7 +246,28 @@ namespace Chapter_016
     {
         // 从基类中派生获取到PrintOut方法，所以是派生成员实现了接口，这里不需要重复实现
     }
-
+    /// <summary>
+    /// <para>显式接口成员实现，分别实现接口IIfc1和IIfc2内的同一个方法PrintOut</para>
+    /// <para>该方法没有显式类级别的实现，所有实例化类后不能直接调用方法</para>
+    /// </summary>
+    public class ExplicitInterfaceRealization : IIfc1, IIfc2
+    {
+        void IIfc1.PrintOut(string s)   //限定接口名称需要加上接口名称
+        { Console.WriteLine($"Printout : {s}"); }
+        void IIfc2.PrintOut(string t)
+        { Console.WriteLine($"Printout : {t}"); }
+    }
+    /// <summary>
+    /// 接口可以继承接口: 实现接口
+    /// </summary>
+    public class MyInterfaceInheritInterface : IDataIO
+    {
+        int x;
+        public int GetData() 
+        { return x; }
+        public void SetData(int y)
+        { x = y; }
+    }
 
 
     /*
