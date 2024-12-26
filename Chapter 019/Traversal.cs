@@ -35,10 +35,19 @@ namespace Chapter_019   // 枚举器和迭代器
     ///             yield return 语句指定了序列中要返回的下一项；
     ///             yield break 语句指定在序列中没有其他项。
     ///     19.5.2 使用迭代器来创建枚举器
-    ///         
-    /// 
-    /// 
-    /// 
+    ///     19.5.3 使用迭代器来创建可枚举类型
+    /// 19.6 常见迭代器模式
+    ///     1.枚举器的迭代器模式：使用迭代器来创建枚举器
+    ///     2.可枚举类型的迭代器模式：使用迭代器来创建可枚举类型
+    /// 19.7 产生多个可枚举类型
+    ///     类中有方法返回可枚举类型，但是类如果没有实现GetEnumerator，那么类本身就不是可枚举类型
+    /// 19.8 将迭代器作为属性
+    ///     演示1.使用迭代器来产生具有两个枚举器的类
+    ///     演示2.演示迭代器如何实现为属性
+    /// 19.9 迭代器的实质
+    ///     1.迭代器需要System.Collections.Generic命名空间，需要引入
+    ///     2.在编译器生成的枚举器中，不支持Reset方法。
+    ///     3.由编译器生成的枚举器类包含四个状态的状态机：Before、Running、Suspended、After
     /// </summary>
     public class Traversal
     {
@@ -68,6 +77,32 @@ namespace Chapter_019   // 枚举器和迭代器
             IteratorCreateEnumerator iterator = new IteratorCreateEnumerator();
             foreach ( string data in iterator)
                 Console.WriteLine(data);
+            Console.WriteLine("####################################");
+            Console.WriteLine("######使用迭代器来创建可枚举类型######");
+            IteratorCreateEnumerationTypes iterable = new IteratorCreateEnumerationTypes();
+            foreach ( string data in iterable)  // 使用类对象
+                Console.WriteLine(data);
+            foreach (string data in iterable.BlackAndWhite())   // 使用类枚举器方法
+                Console.WriteLine(data);
+            Console.WriteLine("####################################");
+            Console.WriteLine("######产生多个可枚举类型##############");
+            Sceptrum sceptrum = new Sceptrum();
+            foreach (string color in sceptrum.UVtoIR())
+                Console.Write($"{color} ");
+            Console.WriteLine();
+            foreach (string color in sceptrum.IRtoUV())
+                Console.Write($"{color} ");
+            Console.WriteLine();
+            Console.WriteLine("####################################");
+            Console.WriteLine("######将迭代器作为属性################");
+            Specturm2 startUV = new Specturm2(true);
+            Specturm2 startIR = new Specturm2(false);
+            foreach (string color in startUV)
+                Console.Write($"{color} ");
+            Console.WriteLine();
+            foreach (string color in startIR)
+                Console.Write($"{color} ");
+            Console.WriteLine();
             Console.WriteLine("####################################");
         }
     }
@@ -136,6 +171,73 @@ namespace Chapter_019   // 枚举器和迭代器
             yield return "Gray";
             yield return "White";
         }
+    }
+    #endregion
+
+    #region 使用迭代器来创建可枚举类型
+    class IteratorCreateEnumerationTypes
+    {
+        public IEnumerator<string> GetEnumerator()
+        {
+            IEnumerable<string> myEnumerable = BlackAndWhite(); // 获取可枚举类型
+            return myEnumerable.GetEnumerator();    // 获取枚举器
+        }
+        public IEnumerable<string> BlackAndWhite()  // IEnumerable<string>返回可枚举类型
+        {
+            yield return "BlackType";
+            yield return "GrayType";
+            yield return "WhiteType";
+        }
+    }
+    #endregion
+
+    #region 产生多个可枚举类型
+    class Sceptrum
+    {
+        string[] colors = { "Violet", "Blue", "Cyan", "Green", "Yellow", "Orange", "Red" };
+        public IEnumerable<string> UVtoIR() // 返回一个可枚举类型
+        {
+            for (int i = 0; i < colors.Length; i++) 
+                yield return colors[i];
+        }
+        public IEnumerable<string> IRtoUV() // 返回一个可枚举类型
+        {
+            for(int i = colors.Length - 1; i >= 0; i--)
+                yield return colors[i];
+        }
+    }
+    #endregion
+
+    #region 将迭代器作为属性
+    class Specturm2
+    {
+        bool _listFromUVtoIR;
+        string[] colors = { "Violet", "Blue", "Cyan", "Green", "Yellow", "Orange", "Red" };
+        public Specturm2(bool listFromUVtoIR)
+        {
+            _listFromUVtoIR = listFromUVtoIR;
+        }
+        public IEnumerator<string> GetEnumerator()
+        {
+            return _listFromUVtoIR ? UVtoIR: IRtoUV;
+        }
+        public IEnumerator<string> UVtoIR   // 迭代器属性
+        {
+            get
+            {
+                for (int i = 0; i < colors.Length; i++)
+                    yield return colors[i];
+            }
+        }
+        public IEnumerator<string> IRtoUV   // 迭代器属性
+        {
+            get
+            {
+                for (int i = colors.Length - 1; i >= 0; i--)
+                    yield return colors[i];
+            }
+        }
+
     }
     #endregion
 
