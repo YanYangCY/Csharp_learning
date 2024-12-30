@@ -33,7 +33,21 @@ namespace Chapter_020
     /// 20.5 查询表达式的结构
     ///     查询表达式由from子句和查询主体组成
     ///     1.子句必须按照一定的顺序出现
-    ///     
+    ///     2.from子句和select...group子句这两部分是必需的
+    ///     3.其他子句是可选的
+    ///     4.在LINQ查询表达式中，select子句在表达式最后
+    ///     5.可以有任意多的from...let...where子句
+    ///     20.5.1 from 子句    
+    ///         指定了要作为数据源使用的数据集合，迭代变量逐个表示数据源的每一个元素
+    ///         from Type Item in Items //Type Item为迭代变量声明
+    ///     20.5.2 join子句
+    ///         主要用于关联多个数据源，允许根据指定的键，将两个或多个集合中的元素进行匹配
+    ///         join  Identifier in Collection2 on Field1 equals Field2
+    ///     20.5.3 什么是联结
+    ///         LINQ中的join接受两个集合，然后创建一个新的集合，其中每一个元素包含两个原始集合中的元素成员
+    ///         正常的联结产生的结果是两个集合的元素之积
+    ///     20.5.4 查询主体中的from...let...where片段
+    ///         1.from子句
     /// 
     /// </summary>
     public class Linq
@@ -70,6 +84,37 @@ namespace Chapter_020
             Console.WriteLine();
             Console.WriteLine(numsCount);
             Console.WriteLine("####################################");
-        }
+            Console.WriteLine("######join子句######################");
+            var students = new List<Student>()
+            {
+                new Student{ StudentId = 1, StudentName = "Alice"},
+                new Student{ StudentId = 2, StudentName = "Bob"}
+            };
+            var courses = new List<Course>()
+            {
+                new Course { CourseId = 101, CourseName = "Math", StudentId = 1 },
+                new Course { CourseId = 102, CourseName = "English", StudentId = 1 },
+                new Course { CourseId = 103, CourseName = "Physics", StudentId = 2 }
+            };
+            var joinedQuery = from student1 in students
+                              join course in courses on student1.StudentId equals course.StudentId
+                              select new { student1.StudentName, course.CourseName, course.CourseId};  
+            foreach(var s in joinedQuery)
+                Console.WriteLine(s);
+            Console.WriteLine("####################################");
+        } // end Main
+    } // end Class Linq
+    #region join 子句示例
+    class Student
+    {
+        public int StudentId { get; set; }
+        public string StudentName { get; set; }
     }
+    class Course
+    {
+        public int CourseId { get; set; }
+        public string CourseName { get; set; }
+        public int StudentId { get; set; }
+    }
+    #endregion
 }
