@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Reflection.Metadata;
+using System.Xml.Linq;
 
 namespace Chapter_020
 {
@@ -47,7 +49,98 @@ namespace Chapter_020
     ///         LINQ中的join接受两个集合，然后创建一个新的集合，其中每一个元素包含两个原始集合中的元素成员
     ///         正常的联结产生的结果是两个集合的元素之积
     ///     20.5.4 查询主体中的from...let...where片段
-    ///         1.from子句
+    ///         1.from子句:查询表达式必须从from子句开始，后面跟的是查询主体
+    ///             var someInts = from a in groupA // 必需的第一个from子句
+    ///                            from b in groupB // 查询主体的第一个子句
+    ///                            where a > 4 && b < 5
+    ///                            select new {a, b, sum = a + b}; // 匿名类型对象
+    ///         2.let子句：接受一个表达式的运算并且把他赋值给一个需要在其他运算中使用的标识符
+    ///             var someInts = from a in groupA 
+    ///                            from b in groupB 
+    ///                            let sum = a + b // 在新的变量中保存结果
+    ///                            where sum == 12
+    ///                            select new {a, b , sum};
+    ///         3.where子句：根据之后的运算去除不符合指定条件的项
+    ///             查询表达式可以有任意多个where子句
+    ///             一个项必须满足所有where子句才能避免被去除
+    ///             var someInts = from a in groupA 
+    ///                            from b in groupB 
+    ///                            let sum = a + b 
+    ///                            where sum >= 12  // 条件1
+    ///                            where a == 4     // 条件2
+    ///                            select new {a, b, sum};
+    ///     20.5.5 orderby子句：接受一个表达式并根据表达式按顺序返回结果项
+    ///         例：orderby Expression ascending/descending
+    ///         表达式通常是项的一个字段，字段不一定非得是数值字段，也可以是字符串这样的可排序类型
+    ///         默认升序，可选ascending/descending关键字可以设置排序为升序或降序
+    ///         Expression表达式可以是多个排序条件
+    ///     20.5.6 select...group子句：由两种类型子句组成---select子句和group...by子句
+    ///         1.select子句指定应该选择所选对象的哪些部分，可以是：整个数据项、数据项中的一个字段、数据项中几个字段组成的新对象
+    ///         2.group...by子句是可选的，用来指定选择的项如何被分组
+    ///     20.5.7 查询中的匿名类型：查询结果可以由原始集合的项、原始集合中项的字段或匿名类型组成
+    ///         字段以逗号隔开，并以大括号包围来创建匿名类型
+    ///     20.5.8 group子句
+    ///         1.如果项包含在查询的结果中，它们就可以根据某个字段的值进行分组。作为分组依据的属性叫作 键(key)
+    ///         2.group子句返回的不是原始数据源中项的枚举，而是返回可以枚举已经形成项的分组的可枚举类型
+    ///         3.分组本身是可枚举类型，它们可以枚举实际的项
+    ///     20.5.9 查询延续：into子句
+    ///         可以接受查询的一部分的结果并赋予一个名字，从而可以在查询的另一部分中使用
+    ///         var someInts = from a in groupA 
+    ///                        join b in groupB on a equals b
+    ///                        into groupAandB // 查询延续
+    ///                        from c in groupAandB
+    ///                        select c;
+    /// 20.6 标准查询运算符
+    ///     由一系列API方法组成，API能让我们查询任何.NET数组或集合。
+    ///     1.标准查询运算符使用方法语法
+    ///     2.一些运算符返回Ienumerable对象，而其他运算符返回标量。返回标量的运算符立即执行查询并返回一个值，而不是可枚举类型。
+    ///     3.很多操作都是以一个谓词作为参数。谓词是一个方法，它以对象为参数，根据对象是否满足某个条件而返回true或false
+    ///       被查询的集合对象叫作序列，它必须实现IEnumerable<T>接口，其中T为类型，包括List<>、Dictionary<>、Array等
+    ///     20.6.1 标准查询运算符的签名
+    ///         System.Linq.Enumerable类声明了标准查询运算符方法。
+    ///         方法语法的调用和扩展语法的调用在语义上是完全相等的，只是语法不同
+    ///             var count1 = Enumerable.Count(intArray);    //方法语法
+    ///             var count2 = intArray.Count();  //扩展语法
+    ///     20.6.2 查询表达式和标准查询运算符
+    ///         查询表达式可以使用带有标准查询运算符的方法语法来编写
+    ///         两种方式组合：
+    ///         int howMany = (from n in nubmers
+    ///                        where n < 7 
+    ///                        select n).Count();
+    ///     20.6.3 将委托作为参数
+    ///     20.6.4 LINQ预定义的委托类型    
+    ///         .NET框架定义了两套泛型委托类型来用于标准查询运算符，即 Func委托和Action委托，各19个成员
+    ///     20.6.5 使用委托参数的示例
+    ///     20.6.6 使用Lambda表达式参数的示例    
+    /// 20.7 LINQ to XML
+    ///     可扩展标记语言XML是存储和交换数据的重要方法。
+    ///     20.7.1 标记语言
+    ///         标记语言是文档中的一组标签
+    ///     20.7.2 XML基础
+    ///         XML文档中的数据包含在一个XML树中，XML树主要由嵌套元素组成
+    ///         元素是XML树的基本要素，每一个元素都有名字并且包含数据，一些元素还可以包含其他嵌套元素
+    ///         元素由开始和关闭标签进行划分<PhoneNumber> </PhoneNumber>
+    ///         没有内容的元素可以由单个标签构成<PhoneNumber />
+    ///         1.XML文档必须有一个根元素来包含所有其他元素
+    ///         2.XML标签必须合理嵌套
+    ///         3.与HTML标签不同，XML标签是区分大小写的
+    ///         4.XML的特性是名/值对，它包含了元素的其他元数据；特性的值部分必须包含在引号内（单引号或双引号）
+    ///         5.XML文档中的空格是有效的
+    ///     20.7.3 XML类
+    ///         LINQ to XML可以以两种方式用于XML：第一种是简化的XML操作API；第二种是LINQ查询工具
+    ///         LINQ to XMLAPI由很多表示XML树组件的类组成，最重要的3个类：XElement、XAttribute、XDocument
+    ///         1.创建、保存、加载和显式XML文档
+    ///             using System.Xml.Linq;
+    ///         2.创建XML树
+    ///         3.使用XML树的值    
+    ///             获取数据的主要方法：Nodes、Elements、Element、Descendants...
+    ///         4.增加节点以及操作XML
+    ///             可以使用Add方法为现有元素增加子元素,还有删除、设置等功能
+    ///             Add\AddFirst、Remove、RemoveNodes...
+    ///     20.7.4 使用XML特性
+    ///         XAttribute主要用于表示 XML 元素的属性。通过XAttribute，可以方便地创建、读取和操作 XML 文档中的元素属性。
+    /// 
+    /// 
     /// 
     /// </summary>
     public class Linq
@@ -102,6 +195,53 @@ namespace Chapter_020
             foreach(var s in joinedQuery)
                 Console.WriteLine(s);
             Console.WriteLine("####################################");
+            Console.WriteLine("######使用委托参数的示例##############");
+            static bool IsOdd(int x)    // 委托对象使用的方法
+            {
+                return x % 2 == 1; // 如果奇数返回true
+            }
+            int[] intArray = new int[] { 3, 4, 5, 6, 7, 8, 9 };
+            Func<int, bool> myDel = new Func<int, bool>(IsOdd); // 委托对象
+            //Func<int, bool> myDel = delegate(int x) { return x % 2 == 1; }; // 等价匿名方法
+            var countodd = intArray.Count(myDel);
+            Console.WriteLine($"Count of odd numbers : {countodd}");
+            Console.WriteLine("####################################");
+            Console.WriteLine("######使用Lambda表达式参数的示例######");
+            var countodd2 = intArray.Count(x => x % 2 == 0);
+            Console.WriteLine($"Count of odd numbers : {countodd2}");
+            Console.WriteLine("####################################");
+            Console.WriteLine("######创建XML文档示例################");
+            XDocument employees1 = 
+                new XDocument(                  // 创建XML文档
+                    new XElement("Employees",   // 创建根元素
+                        new XElement("Employee",    // 第一个employee元素
+                            new XElement("Name","Bob Smith"),   // 创建元素
+                            new XElement("PhoneNumber","408-555-1000")),
+                        new XElement("Employee",    // 第二个employee元素
+                            new XElement("Name","Sally Jones"), // 创建元素
+                            new XElement("PhoneNumber","408-555-2000"),
+                            new XElement("PhoneNumber", "408-555-2001"))
+                    )
+                );
+            employees1.Save("EmployeesFile.xml");   // 保存到文件
+            // 将保存的文档加载到新变量中
+            XDocument employees2 = XDocument.Load("EmployeesFile.xml");  // XDocument.Load是静态方法
+            Console.WriteLine(employees2);   // 显式文档
+            Console.WriteLine("####################################");
+            Console.WriteLine("######获取XML值数据方法使用示例#######");
+            XElement root = employees2.Element("Employees");
+            IEnumerable<XElement> employees = root.Elements();
+            foreach (XElement emp in employees)
+            {
+                XElement empNameNode = emp.Element("Name");
+                Console.WriteLine(empNameNode.Value);
+            }
+            Console.WriteLine("####################################");
+            Console.WriteLine("######获取XML值数据并增加元素#########");
+            XElement rt = employees1.Element("Employees");
+            rt.Add(new XElement("Second"));
+            Console.WriteLine(employees1);
+            Console.WriteLine("####################################");
         } // end Main
     } // end Class Linq
     #region join 子句示例
@@ -116,5 +256,22 @@ namespace Chapter_020
         public string CourseName { get; set; }
         public int StudentId { get; set; }
     }
+    #endregion
+
+    #region XML 示例
+    /*
+    <Employees>
+        <Employee>
+            <Name>Bob Smith </Name>
+            <PhoneNumber>408-555-1000</PhoneNumber>
+            <CellPhone />
+        </Employee>
+        <Employee>
+            <Name>Sally Jone </Name>
+            <PhoneNumber>408-555-2000</PhoneNumber>
+            <PhoneNumber>408-555-2001</PhoneNumber>
+        </Employee>
+    </Employees>
+    */
     #endregion
 }
