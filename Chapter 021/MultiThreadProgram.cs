@@ -18,7 +18,7 @@ namespace Chapter_021
     /// </summary>
     public class MultiThread
     {
-        public static void Main(string[] args)
+        public static async void Main(string[] args)
         {
             // ThreadStart 是一个无参数、无返回值的委托类型
             ThreadStart childref = new ThreadStart(CallToChildThread);
@@ -27,7 +27,20 @@ namespace Chapter_021
             Thread childThread = new Thread(childref);
             // 启动线程
             childThread.Start();
-            
+
+            /***** 多线程写法 ******/
+            // 1. Thread + ThreadStart
+            Thread t = new Thread(new ThreadStart(CallToChildThread));  // 简写： new Thread(CallToChildThread).Start();
+            t.Start();
+
+            // 2. ThreadPool（QueueUserWorkItem）CLR 复用线程池里的线程，不用自己 new Thread。
+            ThreadPool.QueueUserWorkItem(_ => CallToChildThread());
+
+            // 3. Task （TPL，推荐）
+            Task.Run(() => CallToChildThread());    // 默认用线程池
+            // await Task.Factory.StartNew(CallToChildThread, TaskCreationOptions.LongRunning);    // 可新建一条真正的线程，但是方法必须是同步     
+
+            // 4. async/await（语法糖，本质还是 ThreadPool）
 
         }
 

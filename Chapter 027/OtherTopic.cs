@@ -29,11 +29,26 @@ namespace Chapter_027
     ///     int? myNInt = 28; // 可空类型的名字包含后缀
     ///     空接合运算符  ??   判断可空类型的变量为null时返回一个值给表达式
     ///     空条件运算符  ?.   检查变量是否为空，如果为空，运算符返回空；如果不为空，那么访问成员
-    /// 
-    /// 
+    /// 27.6 Main方法
+    ///     Main必须总是声明为static
+    ///     Main可以在类或结构中声明
+    /// 27.7 文档注释
+    ///     <summary>描述类型或类型成员</summary>
+    ///     <param>为方法或构造函数标注参数，并允许描述</param>
+    ///     <remarks>描述类型的声明</remarks>
+    ///     <returns>描述返回值</returns>
+    ///     <value>描述属性</value>
+    /// 27.8 嵌套类型
+    /// 27.9 析构函数和dispose模式
+    ///     比较构造函数和析构函数
+    /// 27.10 Tuple和ValueTuple
+    ///     Tuple的数据类型是类；ValueTuple是结构体
+    ///     Tuple是不可变的，一旦元素赋值了就不能改变；ValueTuple的成员是可变的
+    ///     Tuple的成员是属性，ValueTuple的成员是字段
     /// </summary>
     public class OtherTopic
     {
+        /// <param name="args"></param>
         public static void Main(string[] args)
         {
             // 把字符串解析为数据值
